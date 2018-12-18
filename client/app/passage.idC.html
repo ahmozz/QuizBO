@@ -1,0 +1,185 @@
+
+
+<style>
+  .margin-left-option{
+    margin-left:150; 
+  }
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+ 
+<style>
+    .milieu {
+        margin: 20px;
+        margin-left: 60px;
+        margin-right: 60px;
+    }
+    </style>
+
+<div  class="milieu">
+    <div class="panel panel-primary">
+  
+        <div class="panel-heading">
+            <button type="button" class="btn btn-default" aria-label="Left Align" style="border: 0px solid rgb(200, 200, 200);background-color: #337ab7;" (click)="deleteCour(cour._id)" >
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+              </button>
+          {{envoie.nom}}   </div>
+        <div class="panel-body">
+          <p>  {{envoie.description}} </p>
+          <p>
+                  
+                  </p>
+  
+        </div>
+        <div class="list-group" >
+            <a  class="list-group-item disabled">
+              La liste des Parties
+              </a>
+        </div>
+        <div class="list-group"  *ngFor="let p of envoie.parties">
+          
+                <button type="button"  (click)="partie(p)" class="list-group-item" data-toggle="modal" data-target="#myModal1">{{p.titre}} </button>
+                   
+                </div>
+
+
+        
+        <br><br>
+        <ul class="list-group" >
+          <li  class="list-group-item list-group-item-action list-group-item-success ">
+              La liste Quizes 
+          </li>
+        </ul>
+        <div class="list-group"  *ngFor="let q of envoie.quizes">
+          
+         <li type="button" class="list-group-item">{{q.titre}}   {{q.niveau}}
+            
+            <input type="button" (click)="question(q)" value="Passer Quize" class="btn btn-primary margin-left-option" data-toggle="modal" data-target="#myModal" >   
+   
+          </li>
+         
+
+
+      </div>
+
+
+     
+
+     
+
+      
+        <br><br>
+
+        
+        </div>
+    </div>
+  
+  
+   
+  
+  
+  
+  <!-- Pop up Modifier Cours -->
+  <div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">{{Qui.titre}}</h4>
+        </div>
+        <div class="modal-body">
+            <b></b>
+          <form>
+            <ul class="list-group" >
+              <li  class="list-group-item list-group-item-action list-group-item-info ">
+                  La liste Questions .
+              </li>
+              </ul>
+              <div class="list-group"  *ngFor="let ques of Qui.questions">
+                <div class="panel panel-info">
+                
+                <div class="panel-heading">{{ques.text}}</div>
+                <div class="panel-body">
+                    <div class="list-group"  *ngFor="let c of ques.choies">
+                        <li type="button" class="list-group-item" >
+                          {{c.text}}
+                          
+                       
+                      
+                          <select   class="custom-select mb-2 mr-sm-2 mb-sm-0 margin-left-option" id="inlineFormCustomSelect">
+                            <option  selected>Choose...</option>
+                            
+                            <option value="true">True</option>
+                            <option value="false">False</option>
+                          </select>
+                          <select class="custom-select mb-2 mr-sm-2 mb-sm-0 " id="inlineFormCustomSelect">
+                            <option selected>Reponse Correct...</option>
+                            <option value="1">{{c.status}}</option>
+                          </select>
+                        </li>
+                    </div>
+
+                </div>
+                </div>
+              </div>
+          
+
+           
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="score(Qui)" data-dismiss="modal">Enregistrer</button>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  <!--  Add Contenue -->
+  
+  <!-- Pop up detail -->
+  <div id="myModal1" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">{{part.titre}}</h4>
+        </div>
+        <div class="modal-body">
+            <b></b>
+          <form>
+            <ul class="list-group" >
+              <li  class="list-group-item list-group-item-action list-group-item-info ">
+                {{part.description}}
+              </li>
+              </ul>
+
+           
+
+          </form>
+        </div>
+   
+      </div>
+  
+    </div>
+    </div>
+    
+  
+  
+    
+  
+    <script>
+      $(document).ready(function(){
+          $('[data-toggle="popover"]').popover();   
+      });
+      </script>
+
+<script>$('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus')
+})</script>

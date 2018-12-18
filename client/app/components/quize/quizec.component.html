@@ -1,0 +1,31 @@
+
+<style>
+        .milieu {
+            margin: 20px;
+            margin-left: 60px;
+            margin-right: 60px;
+        }
+        </style>
+      
+<div class="panel panel-primary milieu">
+<div class="panel-heading">Affiche Sujets</div>
+<div class="panel-body">
+   
+  <div class="table-responsive">
+    <table class="table table-striped">
+        <script>var router;</script>
+    <tr *ngFor="let quize of cours">
+
+            <td> {{quize.nom}}   </td>      
+             
+            <td> {{quize.description}}   </td>
+                
+                    
+               <td><a [routerLink]="['/SujetC',quize._id]"><input  value="Detail Quize" class="btn btn-primary" ></a>  </td> 
+              
+
+    </tr> 
+</table>
+</div>
+</div>
+</div>

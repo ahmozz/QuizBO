@@ -1,0 +1,368 @@
+<style>
+  .milieu {
+      margin: 20px;
+      margin-left: 60px;
+      margin-right: 60px;
+  }
+  </style>
+<div class="milieu">
+<div class="panel panel-primary">
+  <div class="panel-heading">Add Subject</div>
+  <div class="panel-body">
+      <form>
+          <div class="form-row">
+                  <div class="col">
+                       <input type="text" [(ngModel)]="nom"  name="nom" class="form-control" placeholder="title"  >
+                  </div>
+                  <br>
+
+                  <div class="col">
+                          <textarea class="form-control" rows="5" placeholder="description" [(ngModel)]="description"  name="description"   ></textarea>
+                  </div>
+                  <br>
+                  <button type="submit" (click)="addCour()"  class="btn btn-primary">Save</button>
+          </div>
+      </form>
+  </div>
+</div>
+
+<div *ngFor="let cour of cours" >
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <button type="button" class="btn btn-default" aria-label="Left Align" style="Skkjqorder: 0px solid rgb(200, 200, 200);background-color: #337ab7;" (click)="deleteCour(cour._id)" >
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </button>
+      {{cour.nom}}
+     </div>
+    <div class="panel-body">
+      <p>  {{cour.description}} </p>
+
+<p>
+  <!-- <input type="button" (click)="f(cour)" value="Ajouter une tache" class="btn btn-primary" data-toggle="modal" data-target="#myModal1" > -->
+
+<input type="button" type="button" (click)="f(cour)" value="Add Quiz" class="btn btn-primary" data-toggle="modal" data-target="#myModal2" >
+
+              <button  type="button" (click)="f(cour)"  class="btn btn-default float-sm-right" data-toggle="modal" data-target="#myModal">
+                  <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                </button>
+
+</p>
+
+    </div>
+
+    <div class="list-group"  *ngFor="let p of cour.parties">
+
+    <button type="button" class="list-group-item">{{p.titre}} </button>
+
+    </div>
+    <div class="list-group" >
+        <a href="#" class="list-group-item disabled">
+            List of Quizzes
+          </a>
+    </div>
+
+    <div *ngFor="let q of cour.quizes" style="   margin-top: 50px;
+    margin-bottom: 50px;
+    margin-right: 50px;
+    margin-left: 50px;" >
+        <div class="panel panel-primary">
+
+            <div class="panel-heading">
+                <button type="button" class="btn btn-default" aria-label="Left Align" style="border: 0px solid rgb(200, 200, 200);background-color: #337ab7;" >
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                  </button>
+                  {{q.titre}}   </div>
+
+
+
+                  <div class="panel-body">
+        Questions :
+          <b [ngSwitch]="q.niveau">
+
+              <b *ngSwitchCase="1" >
+                  <span style="color:#F6DC12"   class="glyphicon glyphicon-star" aria-hidden="true"></span>
+              </b>
+              <b *ngSwitchCase="2" >
+                  <span style="color:#F6DC12"   class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span style="color:#F6DC12"   class="glyphicon glyphicon-star" aria-hidden="true"></span>
+              </b>
+              <b *ngSwitchCase="3" >
+                  <span style="color:#F6DC12"   class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span style="color:#F6DC12"   class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span style="color:#F6DC12"   class="glyphicon glyphicon-star" aria-hidden="true"></span>
+              </b>
+              <b *ngSwitchCase="4" >
+                  <span style="color:#F6DC12"   class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span style="color:#F6DC12"   class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span style="color:#F6DC12"   class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span style="color:#F6DC12"   class="glyphicon glyphicon-star" aria-hidden="true"></span>
+              </b>
+              <b *ngSwitchCase="5" >
+                  <span style="color:#F6DC12"   class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span style="color:#F6DC12"   class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span style="color:#F6DC12"   class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span style="color:#F6DC12"   class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span style="color:#F6DC12"   class="glyphicon glyphicon-star" aria-hidden="true"></span>
+              </b>
+
+            </b>
+
+          <input type="button" (click)="g(cour,q.titre)"  value="Add Question" class="btn btn-primary" style="margin-right:0px" data-toggle="modal" data-target="#myModal3" >
+
+                  </div>
+
+       <div *ngIf="!q.questions" class="list-group" >
+          <a href="#" class="list-group-item disabled">
+              Répondez-vouz
+            </a>
+      </div>
+
+      <div *ngFor="let ques of q.questions" style="   margin-top: 50px;
+      margin-bottom: 50px;
+      margin-right: 50px;
+      margin-left: 50px;" >
+          <div class="panel panel-primary">
+
+              <div class="panel-heading">
+                  <button type="button" class="btn btn-default" aria-label="Left Align" style="border: 0px solid rgb(200, 200, 200);background-color: #337ab7;" >
+                      <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </button>
+                    {{ques.text}}   </div>
+
+
+                    <div class="panel-body">
+                        <p>
+                            <input type="button" (click)="dima(cour,q.titre,ques.text)" value="Add Choice" class="btn btn-primary" data-toggle="modal" data-target="#myModal4" >
+
+
+                        </p>
+                      </div>
+            <div *ngIf="!ques.choies"  class="list-group" >
+                <a href="#" class="list-group-item disabled">
+                    La liste des Choies
+                  </a>
+            </div>
+            <ul class="list-group"  *ngFor="let c of ques.choies">
+                <li  class="list-group-item">
+                  {{c.text}}
+                  <b  *ngIf="c.status==true" >
+                      <span style="color:rgb(37, 221, 0)"  class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                  </b>
+                  <b  *ngIf="!(c.status==true)" >
+                      <span style="color:rgb(255, 0, 0)"  class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                  </b>
+
+                </li>
+              </ul>
+
+
+
+
+      </div>
+
+    </div>
+    <br><br>
+
+
+    </div>
+</div>
+
+
+
+
+
+
+<!-- Pop up Modifier Cours -->
+<div id="myModal" class="modal fade" role="dialog">
+<div class="modal-dialog">
+  <!-- Modal content-->
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title">Modifier Programme</h4>
+    </div>
+    <div class="modal-body">
+        <b></b>
+      <form>
+          <div class="form-row">
+                  <div class="col">
+                       <input value={{envoie.nom}}  [(ngModel)]="upnom"  type="text"    name="upnom" class="form-control" placeholder="titre"   >
+                  </div>
+                  <br>
+
+                  <div class="col">
+                      <textarea value={{envoie.description}} class="form-control" [(ngModel)]="updescription1" name="updescription1"   rows="5" placeholder="description"   >
+
+                      </textarea>
+              </div>
+
+          </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" (click)="updateCour()" data-dismiss="modal">Save</button>
+    </div>
+  </div>
+
+</div>
+</div>
+
+
+
+
+
+<!--  Add Contenue -->
+
+<!-- Pop up Modifier Cours -->
+<!--
+<div id="myModal1" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Ajouter un programme </h4>
+      </div>
+      <div class="modal-body">
+          <b></b>
+        <form>
+            <div class="form-row">
+                    <div class="col">
+                         <input   [(ngModel)]="up_partie_titre"  type="text"  name="up_partie_titre" class="form-control" placeholder="titre"   >
+                    </div>
+                    <br>
+
+                    <div class="col">
+                            <textarea class="form-control" [(ngModel)]="up_partie_description" name="up_partie_description"   rows="5" placeholder="description"   >
+
+                            </textarea>
+                    </div>
+
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="addContenue()" data-dismiss="modal">Save</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+-->
+
+
+
+
+
+
+
+<!--  Add Quize -->
+
+<!-- Pop up Modifier Cours -->
+<div id="myModal2" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add Quiz</h4>
+      </div>
+      <div class="modal-body">
+          <b></b>
+        <form>
+            <div class="form-row">
+                    <div class="col">
+                         <input   [(ngModel)]="up_quize_titre"  type="text"  name="up_quize_titre" class="form-control" placeholder="title"   >
+                    </div>
+                    <br>
+
+                    <div class="col">
+                            <textarea class="form-control" [(ngModel)]="up_quize_description" name="up_quize_description"   rows="5" placeholder="description"   >
+
+                            </textarea>
+                    </div>
+                    <br>
+<!--  <div class="col">
+                        <input placeholder="Niveau" class="form-control" name="up_quize_niveau" [(ngModel)]="up_quize_niveau" type="number"  id="example-number-input"   rows="1" />
+                   </div>-->
+
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="addQuize()" data-dismiss="modal">Save</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+<!--  Add Question -->
+
+<!-- Pop up Modifier Cours -->
+<div id="myModal3" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add Question</h4>
+      </div>
+      <div class="modal-body">
+          <b></b>
+        <form>
+            <div class="form-row">
+                    <div class="col">
+                         <input   [(ngModel)]="up_question_text"  type="text"  name="up_question_titre" class="form-control" placeholder="Question ?"   >
+                    </div>
+                    <br>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="addQuestion()" data-dismiss="modal">Save</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<!--  Add Choies -->
+
+<!-- Pop up Modifier Cours -->
+<div id="myModal4" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add Choice</h4>
+      </div>
+      <div class="modal-body">
+          <b></b>
+        <form>
+            <div class="form-row">
+                    <div class="col">
+                         <input   [(ngModel)]="up_choie_text"  type="text"  name="up_choie_text" class="form-control" placeholder="Choix"   >
+                    </div>
+                    <br>
+                    <div class="col">
+
+                        <input   [(ngModel)]="up_choie_status"  type="checkbox"  name="up_choie_status" class="form-control" placeholder="true"   >
+                   </div>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="addChoie()" data-dismiss="modal">Save</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
